@@ -1,0 +1,307 @@
+/* General Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    background: url('ss.jpg') no-repeat;
+    background-size: cover;
+    background-position: center;
+    animation: animate-background 5s linear infinite;
+}
+
+.container {
+    width: 90%;
+    max-width: 400px;
+    margin: 50px auto;
+    padding: 20px;
+    background: transparent;
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    border: 2px solid #fff;
+    transition: filter 0.3s ease;
+}
+.container p{
+    color: #fff;
+    text-decoration: none;
+}
+.container p a{
+    color: #fff;
+    text-decoration: none;
+    font-weight: 600;
+
+}
+
+
+.password-container {
+    position: relative;
+}
+
+.toggle-password {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #feffff;
+}
+
+h1 {
+    font-size: 24px;
+    color: #333;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+input {
+    width: 100%;
+    margin: 10px 0;
+    padding: 10px;
+    border: 1px  solid #ccc;
+    background: transparent;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+a {
+    text-decoration: none;
+    color: #b3d2f3;
+    transition: color 0.3s ease;
+}
+
+a:hover {
+    color: #0056b3;
+}
+
+/* Admin Login Button */
+.admin-login {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+.admin-login button {
+    background: #28a745;
+    padding: 8px 15px;
+    font-size: 14px;
+}
+
+.admin-login button:hover {
+    background: #218838;
+}
+
+/* Sidebar styles */
+.sidebar {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: #2c3e50b8;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 60px;
+    z-index: 1000;
+}
+
+.sidebar.active {
+    left: 0;
+}
+
+.sidebar a {
+    padding: 15px 25px;
+    text-decoration: none;
+    font-size: 18px;
+    color: #ecf0f1;
+    display: block;
+    transition: 0.3s;
+}
+
+.sidebar a:hover {
+    font-size: 21px;
+  
+    color: #cee9ad;
+}
+
+.sidebar .close-btn {
+    position: absolute;
+    top: 10px;
+    right: 25px;
+    font-size: 30px;
+    color: #ecf0f1;
+    cursor: pointer;
+}
+
+.sidebar .close-btn:hover {
+    color: #e74c3c;
+}
+
+.sidebar-header {
+    padding: 20px;
+    text-align: center;
+    color: #ecf0f1;
+    border-bottom: 1px solid #2c3e50b8;
+}
+
+.sidebar-header h2 {
+    margin: 0;
+    font-size: 22px;
+}
+
+.sidebar-header p {
+    margin: 10px 0;
+    font-size: 16px;
+}
+
+.sidebar-header a {
+    color: #1abc9c;
+    text-decoration: underline;
+}
+/* Profile Page Styles */
+header {
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    background-color: #ffffff;
+    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+    position: relative;
+    z-index: 1;
+}
+
+.menu-icon {
+    font-size: 23px;
+    cursor: pointer;
+    color: #ffffff;
+    border-radius: 7px;
+   
+    
+}
+.menu-icon:hover{
+    border: 2px solid #c7ced4;
+    font-size: 27px;
+    color: #fff;
+    transition: .1s;
+
+}
+.registerform p{
+    color: #fff;
+}
+
+.logout-btn {
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    color: #333;
+}
+
+.profile-box {
+    text-align: center;
+    margin-top: 20px;
+    position: relative;
+    z-index: 1;
+}
+
+.profile-pic-container {
+    position: relative;
+    display: inline-block;
+}
+
+.profile-pic {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    border: 3.5px solid #bbbec1;
+    object-fit: cover;
+}
+
+.plus-button {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    background-color: #899097;
+    color: rgb(255, 255, 255);
+    border-radius: 50%;
+    width: 17px;
+    height: 17px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background 0.7s ease;
+}
+
+.plus-button:hover {
+    background-color: #0056b3;
+}
+
+/* Photo Form Styles */
+.photo-form {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+    z-index: 1001;
+    text-align: center;
+}
+
+.photo-form h3 {
+    margin-bottom: 15px;
+    color: #333;
+}
+
+.upload-btn, .delete-btn, .close-form-btn {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background 0.3s ease;
+}
+
+.upload-btn {
+    background-color: #007bff;
+    color: white;
+}
+
+.upload-btn:hover {
+    background-color: #0056b3;
+}
+
+.delete-btn {
+    background-color: #dc3545;
+    color: white;
+}
+
+.delete-btn:hover {
+    background-color: #c82333;
+}
+
+.close-form-btn {
+    background-color: #6c757d;
+    color: white;
+}
+
+.close-form-btn:hover {
+    background-color: #5a6268;
+}

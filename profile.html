@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile - Tasma Travel</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: url('ss.jpg') no-repeat center center fixed;
+            background-size: cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .profile-container {
+            width: 1500px;
+            height: 760px;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            text-align:center;
+            font: 1em sans-serif;
+        }
+
+        .header {
+            text-align: center;
+            height: 100px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            background: linear-gradient(to right, #ee8a2d, #ba36cbe2, #0f1ae9);
+            color: white;
+        }
+
+        .header h2 {
+            font-size: 23px;
+        border-radius: 10px;
+            
+        }
+
+        .menu-icon {
+            font-size: 22px;
+            cursor: pointer;
+            color: #ffffff;
+            border-radius: 7px;
+        }
+
+        .menu-icon:hover {
+            font-size: 27px;
+            color: #fff;
+            transition: .1s;
+        }
+
+        .profile-header {
+            position: relative;
+        }
+
+        .bg-image {
+            width: 100%;
+            height: 120px;
+            object-fit: cover;
+            filter: blur(2px) brightness(50%);
+        }
+
+        .profile-picture {
+            position: absolute;
+            bottom: -40px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 10px solid white;
+        }
+
+        .profile-picture img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .camera-icon {
+            position: absolute;
+            bottom: -30px;
+            right: 20px;
+            background: white;
+            color: #7d3c98;
+            padding: 8px;
+            border-radius: 50%;
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .profile-info {
+            margin-top: 50px;
+        }
+
+        .profile-info h3 {
+            font-size: 18px;
+            color: #333;
+        }
+
+        .profile-info p {
+            font-size: 14px;
+            color: gray;
+        }
+
+        .details {
+            margin: 20px;
+            text-align: left;
+        }
+
+        .details label {
+            font-size: 14px;
+            color: gray;
+            display: block;
+            margin: 10px 0 5px;
+        }
+
+        .details input {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-bottom: 1px solid #ccc;
+            font-size: 14px;
+            background: #f9f9f9;
+            pointer-events: none; /* Make input fields non-editable */
+        }
+
+        .sidebar {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background-color: #2c3e50b8;
+            overflow-x: hidden;
+            transition: 0.5s;
+            padding-top: 60px;
+            z-index: 1000;
+        }
+
+        .sidebar.active {
+            left: 0;
+        }
+
+        .sidebar a {
+            padding: 15px 25px;
+            text-decoration: none;
+            font-size: 18px;
+            color: #ecf0f1;
+            display: block;
+            transition: 0.3s;
+        }
+
+        .sidebar a:hover {
+            font-size: 21px;
+            color: #cee9ad;
+        }
+
+        .sidebar .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 25px;
+            font-size: 30px;
+            color: #ecf0f1;
+            cursor: pointer;
+        }
+
+        .sidebar .close-btn:hover {
+            color: #e74c3c;
+        }
+
+        .sidebar-header {
+            padding: 20px;
+            text-align: center;
+            color: #ecf0f1;
+            border-bottom: 1px solid #2c3e50b8;
+        }
+
+        .sidebar-header h2 {
+            margin: 0;
+            font-size: 22px;
+        }
+
+        .sidebar-header p {
+            margin: 10px 0;
+            font-size: 16px;
+        }
+
+        .sidebar-header a {
+            color: #1abc9c;
+            text-decoration: underline;
+        }
+
+        .settings-form {
+            display: none;
+            margin: 20px;
+            text-align: left;
+        }
+
+        .settings-form label {
+            font-size: 14px;
+            color: gray;
+            display: block;
+            margin: 10px 0 5px;
+        }
+
+        .settings-form input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 14px;
+            background: #f9f9f9;
+        }
+
+        .settings-form button {
+            padding: 10px;
+            margin: 10px 0;
+            background: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: background 0.3s ease;
+        }
+
+        .settings-form button:hover {
+            background: #0056b3;
+        }
+
+        .password-form {
+            display: none;
+            margin: 20px;
+            text-align: left;
+        }
+
+        .password-form label {
+            font-size: 14px;
+            color: gray;
+            display: block;
+            margin: 10px 0 5px;
+        }
+
+        .password-form input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 14px;
+            background: #f9f9f9;
+        }
+
+        .password-form button {
+            padding: 10px;
+            margin: 10px 0;
+            background: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: background 0.3s ease;
+        }
+
+        .password-form button:hover {
+            background: #0056b3;
+        }
+
+        .close-icon {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 20px;
+            color: #333;
+            cursor: pointer;
+        }
+
+        .close-icon:hover {
+            color: #e74c3c;
+        }
+    </style>
+</head>
+<body onload="loadProfile()">
+    <!-- Sidebar -->
+    <div id="sidebar" class="sidebar">
+        <a href="javascript:void(0)" class="close-btn" onclick="closeSidebar()">×</a>
+        <div class="sidebar-header">
+            <h2>TASMA TRAVEL</h2>
+            <p><i class="fas fa-envelope"></i> Email: <span id="sidebarEmail"></span></p>
+            <p><i class="fas fa-phone"></i> Contact: <span id="sidebarPhone"></span></p>
+        </div>
+        <a href="profile.html"><i class="fas fa-user"></i> Profile</a>
+        <a href="account-summary.html"><i class="fas fa-chart-line"></i> Account Summary</a>
+        <a href="#" onclick="showSettingsForm()"><i class="fas fa-cog"></i> Edit details </a>
+        <a href="#" onclick="showPasswordForm()"><i class="fas fa-key"></i> Change Password</a>
+        <a href="#" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</a>
+    
+    </div>
+
+    <div class="profile-container" id="profileContainer">
+        <!-- Header -->
+        <div class="header">
+            <i class="fas fa-bars menu-icon" onclick="openSidebar()"></i>
+            <h2>PROFILE</h2>
+        </div>
+
+        <div class="profile-header">
+            <img src="profile-bg.jpg" class="bg-image" alt="Profile Background">
+            <div class="profile-picture">
+                <img id="profilePic" src="user.jpg" alt="User Profile">
+            </div>
+            <i class="fas fa-camera camera-icon" onclick="document.getElementById('fileInput').click();"></i>
+            <input type="file" id="fileInput" style="display: none;" accept="image/*" onchange="uploadProfilePicture()">
+        </div>
+
+        <div class="profile-info">
+            <h3 id="userName">AVLIN THOMUS</h3>
+        </div>
+        
+
+        <div class="details">
+            <label>Email</label>
+            <input type="email" id="userEmailInput" placeholder="">
+
+            <label>Phone Number</label>
+            <input type="text" id="userPhoneInput" placeholder="">
+
+            <label>NIC Number</label>
+            <input type="text" id="userNICInput" placeholder="">
+
+            <label>Vehicle Model</label>
+            <input type="text" id="userVehicleModelInput" placeholder="">
+
+            <label>Vehicle Number</label>
+            <input type="text" id="userVehicleInput" placeholder="">
+        </div>
+    </div>
+
+    <div class="settings-form" id="settingsForm">
+        <h3>Edit details</h3>
+        <label for="editUserName">Name</label>
+        <input type="text" id="editUserName" placeholder="">
+
+        <label for="editPhone">Phone Number</label>
+        <input type="text" id="editPhone" placeholder="">
+
+        <button onclick="saveSettings()">Save Change</button>
+    </div>
+
+    <div class="password-form" id="passwordForm">
+        <span class="close-icon" onclick="closePasswordForm()">×</span>
+        <h3>Change Password</h3>
+        <label for="currentPassword">Current Password</label>
+        <input type="password" id="currentPassword" placeholder="">
+
+        <label for="newPassword">New Password</label>
+        <input type="password" id="newPassword" placeholder="">
+
+        <label for="confirmPassword">Confirm New Password</label>
+        <input type="password" id="confirmPassword" placeholder="">
+
+        <button onclick="changePassword()">Update Password</button>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        function loadProfile() {
+            const currentUserEmail = localStorage.getItem("currentUser");
+            if (!currentUserEmail) {
+                window.location.href = "index.html"; // Redirect to login if no user is logged in
+                return;
+            }
+
+            const user = JSON.parse(localStorage.getItem(currentUserEmail));
+            if (user) {
+                document.getElementById("userName").textContent = user.name;
+                document.getElementById("userEmailInput").value = user.email;
+                document.getElementById("userPhoneInput").value = user.phone;
+                document.getElementById("userNICInput").value = user.nic;
+                document.getElementById("userVehicleModelInput").value = user.vehicleModel;
+                document.getElementById("userVehicleInput").value = user.vehicle;
+
+                // Update sidebar details
+                document.getElementById("sidebarEmail").textContent = user.email;
+                document.getElementById("sidebarPhone").textContent = user.phone;
+
+                // Load saved profile picture
+                const savedPic = user.profilePic;
+                if (savedPic) {
+                    document.getElementById("profilePic").src = savedPic;
+                }
+
+                // Apply blur effect initially (when sidebar is closed)
+                document.getElementById("profileContainer").style.filter = "blur(0px)";
+            }
+        }
+
+        // Upload profile picture
+        function uploadProfilePicture() {
+            const fileInput = document.getElementById("fileInput");
+            const file = fileInput.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (event) {
+                    const imageUrl = event.target.result;
+                    document.getElementById("profilePic").src = imageUrl;
+
+                    // Save profile picture in localStorage
+                    const currentUserEmail = localStorage.getItem("currentUser");
+                    if (currentUserEmail) {
+                        const user = JSON.parse(localStorage.getItem(currentUserEmail));
+                        user.profilePic = imageUrl;
+                        localStorage.setItem(currentUserEmail, JSON.stringify(user));
+                    }
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        // Open sidebar
+        function openSidebar() {
+            document.getElementById("sidebar").style.width = "250px";
+            document.getElementById("profileContainer").style.filter = "blur(5px)";
+        }
+
+        // Close sidebar
+        function closeSidebar() {
+            document.getElementById("sidebar").style.width = "0";
+            document.getElementById("profileContainer").style.filter = "blur(0px)";
+        }
+
+        // Show settings form
+        function showSettingsForm() {
+            const currentUserEmail = localStorage.getItem("currentUser");
+            const user = JSON.parse(localStorage.getItem(currentUserEmail));
+            if (user) {
+                document.getElementById("editUserName").value = user.name;
+                document.getElementById("editPhone").value = user.phone;
+            }
+            document.getElementById("settingsForm").style.display = "block";
+            document.getElementById("passwordForm").style.display = "none";
+            document.getElementById("profileContainer").style.filter = "blur(5px)";
+        }
+
+        // Save settings
+        function saveSettings() {
+            const currentUserEmail = localStorage.getItem("currentUser");
+            const user = JSON.parse(localStorage.getItem(currentUserEmail));
+            if (user) {
+                user.name = document.getElementById("editUserName").value;
+                user.phone = document.getElementById("editPhone").value;
+                localStorage.setItem(currentUserEmail, JSON.stringify(user));
+                loadProfile();
+                closeSettingsForm();
+            }
+        }
+
+        // Close settings form
+        function closeSettingsForm() {
+            document.getElementById("settingsForm").style.display = "none";
+            document.getElementById("profileContainer").style.filter = "blur(0px)";
+        }
+
+        // Show password form
+        function showPasswordForm() {
+            document.getElementById("settingsForm").style.display = "none";
+            document.getElementById("passwordForm").style.display = "block";
+            document.getElementById("profileContainer").style.filter = "blur(5px)";
+        }
+
+        // Change password
+        function changePassword() {
+            const currentUserEmail = localStorage.getItem("currentUser");
+            const user = JSON.parse(localStorage.getItem(currentUserEmail));
+            const currentPassword = document.getElementById("currentPassword").value;
+            const newPassword = document.getElementById("newPassword").value;
+            const confirmPassword = document.getElementById("confirmPassword").value;
+
+            if (user.password !== currentPassword) {
+                alert("Your current password is wrong. Try another way!");
+                return;
+            }
+
+            if (newPassword !== confirmPassword) {
+                alert("New password and confirm password do not match.");
+                return;
+            }
+
+            user.password = newPassword;
+            localStorage.setItem(currentUserEmail, JSON.stringify(user));
+            alert("Password updated successfully!");
+            closePasswordForm();
+        }
+
+        // Close password form
+        function closePasswordForm() {
+            document.getElementById("passwordForm").style.display = "none";
+            document.getElementById("profileContainer").style.filter = "blur(0px)";
+        }
+
+        // Logout
+        function logout() {
+            localStorage.removeItem("currentUser");
+            window.location.href = "index.html";
+        }
+    </script>
+</body>
+</html>

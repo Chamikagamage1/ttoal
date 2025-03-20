@@ -1,0 +1,434 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+
+section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    background: url('ss.jpg') no-repeat;
+    background-size: cover;
+    background-position: center;
+    animation: animate-background 5s linear infinite;
+}
+
+@keyframes animate-background {
+    100% {
+        filter: hue-rotate(360deg);
+    }
+}
+
+.container {
+    width: 90%;
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 20px;
+    background: #fff;
+    box-shadow: 0px 0px 15px rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    transition: filter 0.3s ease;
+}
+
+header {
+    height: 60px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    background-color: #ffffff;
+    box-shadow: 0px 2px 10px rgba(255, 255, 255, 0.1);
+    position: relative;
+    z-index: 1;
+}
+
+.menu-icon {
+    font-size: 22px;
+    cursor: pointer;
+    color: #e4d2d2;
+    
+    border-radius: 7px;
+}
+
+.menu-icon:hover {
+    border: #00520e;
+    font-size: 27px;
+    color: #7c7575;
+    transition: .1s;
+}
+
+h1 {
+    font-size: 24px;
+    color: #af5757;
+}
+
+.blue {
+    color: #007bff;
+}
+
+.orange {
+    color: #ff7f50;
+}
+
+h3 {
+    margin-bottom: 20px;
+    color: #e82828;
+}
+
+h5 {
+    margin-bottom: 20px;
+    color: #9b9898;
+}
+
+h6 {
+    font-size: 26px;
+    margin-bottom: 20px;
+    color: #00520e;
+}
+
+.profile-box {
+    text-align: center;
+    margin-top: 20px;
+    position: relative;
+    z-index: 1;
+}
+
+.profile-pic-container {
+    position: relative;
+    display: inline-block;
+}
+
+.profile-pic {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    border: 4px solid #007bff;
+    object-fit: cover;
+}
+
+.profile-info {
+    margin-top: 20px;
+}
+
+.profile-info p {
+    font-size: 18px;
+    margin: 10px 0;
+    color: #ee4848;
+}
+
+.profile-info p strong {
+    color: #5d5656;
+}
+
+.account-summary {
+    margin-top: 20px;
+    text-align: left;
+}
+
+.account-summary h2 {
+    margin-bottom: 15px;
+    color: #05a905;
+}
+
+.account-summary ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.account-summary li {
+    background: #f9f9f9;
+    padding: 10px;
+    border: 1px solid #c7c5c5;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+button {
+    margin-top: 20px;
+    padding: 10px;
+    background: #6c757d;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+button:hover {
+    background: #5a6268;
+}
+
+form {
+    width: 160%;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+
+input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+input[type="text"] {
+    width: 50%;
+    padding: 10px;
+    margin: 10px 0;
+    font-size: 16px;
+}
+
+button {
+    background-color: #3498db;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    cursor: pointer;
+}
+
+
+.sidebar {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: #2c3e50b8;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 60px;
+    z-index: 1000;
+}
+
+.sidebar.active {
+    left: 0;
+}
+
+.sidebar a {
+    padding: 15px 25px;
+    text-decoration: none;
+    font-size: 18px;
+    color: #ecf0f1;
+    display: block;
+    transition: 0.3s;
+}
+
+.sidebar a:hover {
+    font-size: 21px;
+    color: #cee9ad;
+}
+
+.sidebar .close-btn {
+    position: absolute;
+    top: 10px;
+    right: 25px;
+    font-size: 30px;
+    color: #ecf0f1;
+    cursor: pointer;
+}
+
+.sidebar .close-btn:hover {
+    color: #e74c3c;
+}
+
+.sidebar-header {
+    padding: 20px;
+    text-align: center;
+    color: #ecf0f1;
+    border-bottom: 1px solid #2c3e50b8;
+}
+
+.sidebar-header h2 {
+    margin: 0;
+    font-size: 22px;
+}
+
+.sidebar-header p {
+    margin: 10px 0;
+    font-size: 16px;
+}
+
+.sidebar-header a {
+    color: #1abc9c;
+    text-decoration: underline;
+}
+
+
+/* Profile Page Styles */
+.logout-btn {
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.profile-box {
+    text-align: center;
+    margin-top: 20px;
+    position: relative;
+    z-index: 1;
+}
+
+.profile-pic {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    border: 2px solid #c74f4fe6;
+}
+
+.container payment-items {
+    background: white;
+    color: black;
+    border-radius: 10px;
+    padding: 10px;
+    margin: 10px;
+    max-width: 600px;
+    margin: auto;
+}
+
+
+/* Payment Page Styles */
+.payment-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100vh;
+    background: url('ss.jpg') no-repeat;
+    background-size: cover;
+    background-position: center;
+    animation: animate-background 5s linear infinite;
+}
+
+
+
+.details {
+    margin: 20px;
+    text-align: left;
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.details label {
+    font-size: 14px;
+    color: gray;
+    display: block;
+    margin: 10px 0 5px;
+}
+
+.details input {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-bottom: 1px solid #ccc;
+    font-size: 14px;
+    background: #f9f9f9;
+    pointer-events: none; /* Make input fields non-editable */
+}
+
+.payment-form {
+    margin: 20px;
+    text-align: left;
+}
+
+.payment-form label {
+    font-size: 14px;
+    color: gray;
+    display: block;
+    margin: 10px 0 5px;
+}
+
+.payment-form select, .payment-form input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+    background: #f9f9f9;
+}
+
+.payment-form button {
+    padding: 10px;
+    margin: 10px 0;
+    background: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: background 0.3s ease;
+}
+
+.payment-form button:hover.active {
+    background: #0056b3;
+}
+
+.payment-history {
+    margin: 20px;
+    text-align: left;
+}
+
+
+.container {
+    width: 100%;
+    max-width: 600px;
+    font-size: 13px;
+    margin: 50px auto;
+    padding: 20px;
+    background: #fff;
+    box-shadow: 0px 0px 15px rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    transition: filter 0.3s ease;
+}
+.container .payment-item{
+    background: white;
+    color: black;
+    border-radius: 10px;
+    padding: 10px;
+    margin: 10px;
+    max-width: 600px;
+    margin: auto;
+}
+
+
+/* Payment history rows */
+.payment-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+.payment-item:last-child {
+    border-bottom: none;
+}
+
+.payment-item div {
+    flex: 1;
+    text-align: center;
+}
+
+.payment-item .payment-date {
+    font-size: 12px;
+    color: #999;
+    margin-top: 5px;
+}
+
+.payment-item div:first-child {
+    text-align: left;
+}
+
+.payment-item div:last-child {
+    text-align: right;
+}
