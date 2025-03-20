@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Poppins", sans-serif;
+        }
+
+        section {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            background: url('ss.jpg') no-repeat;
+            background-size: cover;
+            background-position: center;
+            animation: animate-background 5s linear infinite;
+        }
+
+        @keyframes animate-background {
+            100% {
+                filter: hue-rotate(360deg);
+            }
+        }
+
+        button {
+            padding: 10px;
+            margin: 10px 0;
+            background: #ffffff;
+            color: rgb(0, 0, 0);
+            border: none;
+            cursor: pointer;
+            border-radius: 15px;
+            font-size: 16px;
+            transition: background 0.3s ease;
+        }
+
+        button:hover {
+            background: #ffffff8a;
+            color: #fff;
+        }
+
+        h2 {
+            color: #ffffff;
+        }
+
+        .container {
+            backdrop-filter: blur(15px);
+            border-radius: 20px;
+            height: 680px;
+        }
+
+        .container p {
+            font-family: .9em;
+            color: #ffffff;
+            text-align: center;
+            margin: 25px 0 10px;
+        }
+
+        .container p a {
+            color: rgb(255, 255, 255);
+            font-weight: 600;
+        }
+
+        .container p a:hover {
+            text-decoration: underline;
+            color: #ffffffa1;
+        }
+
+        .container form input {
+            color: #ffffff;
+        }
+
+        .password-container {
+            position: relative;
+        }
+
+        .toggle-password {
+            position: absolute;
+            top: 50%;
+            right: 10px;
+            transform: translateY(-50%);
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <section>
+        <div class="container">
+            <form id="registerForm">
+                <h2>Register</h2>
+                <div class="input-box">
+                    <input type="text" id="name" placeholder="Name" required>
+                </div>
+                <div class="input-box">
+                    <input type="email" id="email" placeholder="Email" required>
+                </div>
+                <div class="input-box">
+                    <input type="text" id="phone" placeholder="Phone Number" required>
+                </div>
+                <div class="input-box">
+                    <input type="text" id="nic" placeholder="NIC Number" required>
+                </div>
+                <div class="input-box">
+                    <input type="text" id="vehicleModel" placeholder="Vehicle Model" required>
+                </div>
+                <div class="input-box">
+                    <input type="text" id="vehicle" placeholder="Vehicle Number" required>
+                </div>
+                <div class="password-container">
+                    <input type="password" id="password" placeholder="Password" required>
+                    <span class="toggle-password" onclick="togglePasswordVisibility('password')">
+                        <i class="fas fa-eye"></i>
+                    </span>
+                </div>
+                <div class="password-container">
+                    <input type="password" id="confirmPassword" placeholder="Confirm Password" required>
+                    <span class="toggle-password" onclick="togglePasswordVisibility('confirmPassword')">
+                        <i class="fas fa-eye"></i>
+                    </span>
+                </div>
+                <button type="submit">Register</button>
+            </form>
+            <p>Already have an account? <a href="index.html">Sign In</a></p>
+        </div>
+    </section>
+    <script src="script.js"></script>
+</body>
+</html>

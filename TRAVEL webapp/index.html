@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="super.css">
+    <title>Tasma Travel - Login</title>
+</head>
+<body>
+    <section>
+        <div class="login-box" id="loginBox">
+            <form id="loginForm">
+                <div class="admin-login">
+                    <a href="adminlog.html">Admin Login</a>
+                </div>
+                <h2>Tasma Travel</h2>
+                <h3>Login</h3>
+                <div class="input-box">
+                    <span class="icon"><ion-icon name="car"></ion-icon></span>
+                    <input type="text" id="vehicle" required>
+                    <label>Vehicle Number</label>
+                </div>
+                <div class="input-box">
+                    <span class="icon"><ion-icon name="lock-closed"></ion-icon></span>
+                    <input type="password" id="password" required>
+                    <label>Password</label>
+                </div>
+                <div class="remember-forgot">
+                    <label><input type="checkbox"> Remember me </label>
+                    <a href="reset-password.html">Forgot password?</a>
+                </div>
+                <button type="submit">Login</button>
+                <div class="register-link">
+                    <p>Don't have an account? <a href="Register.html">Sign up</a></p>
+                </div>
+            </form>
+        </div>
+    </section>
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const vehicle = document.getElementById('vehicle').value.toUpperCase();
+            const password = document.getElementById('password').value;
+            
+            const user = JSON.parse(localStorage.getItem(vehicle)); 
+
+            if (user && user.password === password) {
+                localStorage.setItem('currentUser', vehicle);
+                window.location.href = 'account-summary.html';
+            } else {
+                alert('Invalid vehicle number or password');
+            }
+        });
+
+        function showRegisterForm() {
+            document.getElementById('loginBox').style.display = 'none';
+            document.getElementById('registerBox').style.display = 'flex';
+        }
+
+        function showLoginForm() {
+            document.getElementById('registerBox').style.display = 'none';
+            document.getElementById('loginBox').style.display = 'flex';
+        }
+
+        function togglePasswordVisibility(fieldId) {
+            const passwordField = document.getElementById(fieldId);
+            const icon = passwordField.nextElementSibling.querySelector("i");
+
+            if (passwordField.type === "password") {
+                passwordField.type = "text";
+                icon.classList.replace("fa-eye", "fa-eye-slash");
+            } else {
+                passwordField.type = "password";
+                icon.classList.replace("fa-eye-slash", "fa-eye");
+            }
+        }
+    </script>
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+</body>
+</html>

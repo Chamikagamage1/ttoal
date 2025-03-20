@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Details - Tasma Travel</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body onload="loadUserDetails()">
+    <!-- Sidebar -->
+    <div id="sidebar" class="sidebar">
+        <a href="javascript:void(0)" class="close-btn" onclick="closeSidebar()">×</a>
+        <div class="sidebar-header">
+            <h2>TASMA TRAVEL</h2>
+            <p><i class="fas fa-envelope"></i> Email: <span id="sidebarEmail"></span></p>
+            <p><i class="fas fa-phone"></i> Contact: <span id="sidebarPhone"></span></p>
+        </div>
+        <a href="adminview.html"><i class="fas fa-users"></i> Dashboard</a>
+        <a href="route.html"><i class="fas fa-road"></i> Manage Routes</a>
+        <a href="#" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</a>
+    </div>
+
+    <div class="container" id="mainContent">
+        <header>
+            <div class="menu-icon" onclick="window.location.href='adminview.html'">→</div>
+            <h1>User Details</h1>
+        </header>
+
+        <div class="details" id="userDetails">
+            <h3>User Details</h3>
+            <label>Name</label>
+            <input type="text" id="userName" placeholder="">
+
+            <label>Email</label>
+            <input type="email" id="userEmail" placeholder="">
+
+            <label>Phone Number</label>
+            <input type="text" id="userPhone" placeholder="">
+
+            <label>NIC Number</label>
+            <input type="text" id="userNIC" placeholder="">
+
+            <label>Vehicle Model</label>
+            <input type="text" id="userVehicleModel" placeholder="">
+
+            <label>Vehicle Number</label>
+            <input type="text" id="userVehicle" placeholder="">
+        </div>
+
+        <div class="payment-form" id="paymentForm">
+            <h3>Add Payment</h3>
+            <label for="paymentOption">Select Option</label>
+            <select id="paymentOption" onchange="togglePaymentDepositOptions()">
+                <option value="">Select Option</option>
+                <option value="payment">Payment</option>
+                <option value="deposit">Deposit</option>
+            </select>
+
+            <div id="paymentOptions" style="display: none;">
+                <label for="paymentType">Payment Type</label>
+                <select id="paymentType" onchange="togglePaymentOptions()">
+                    <option value="">Select Payment Type</option>
+                    <option value="northSail">North Sail</option>
+                    <option value="otherHire">Other Hire</option>
+                </select>
+
+                <div id="northSailOptions" style="display: none;">
+                    <label for="northSailDate">Select Shift</label>
+                    <select id="northSailDate">
+                        <option value="">Select Shift</option>
+                        <option value="6-2">6-2</option>
+                        <option value="2-10">2-10</option>
+                        <option value="6-6">6-6</option>
+                        <option value="8-5">8-5</option>
+                        <option value="10-6">10-6</option>
+                    </select>
+
+                    <label for="inOut">In/Out</label>
+                    <select id="inOut">
+                        <option value="in">In</option>
+                        <option value="out">Out</option>
+                    </select>
+
+                    <label for="paymentVehicleType">Vehicle Type</label>
+                    <select id="paymentVehicleType" onchange="populateRouteNumbers()">
+                        <option value="">Select Vehicle Type</option>
+                    </select>
+
+                    <label for="paymentRouteNumber">Route Number</label>
+                    <select id="paymentRouteNumber" onchange="populateRouteAmount()">
+                        <option value="">Select Route Number</option>
+                    </select>
+
+                    <label for="amount">Amount (LKR)</label>
+                    <input type="text" id="amount" readonly>
+
+                    <label for="northSailPaymentDate">Payment Date</label>
+                    <input type="date" id="northSailPaymentDate">
+                </div>
+
+                <div id="otherHireOptions" style="display: none;">
+                    <label for="reason">Reason</label>
+                    <input type="text" id="reason" placeholder="Reason">
+
+                    <label for="otherAmount">Amount (LKR)</label>
+                    <input type="number" id="otherAmount" placeholder="Amount">
+
+                    <label for="otherHirePaymentDate">Payment Date</label>
+                    <input type="date" id="otherHirePaymentDate">
+                </div>
+
+                <button onclick="addPayment()">Add Payment</button>
+            </div>
+
+            <div class="diposit-form" id="depositOptions" style="display: none;">
+                <h3>Bank Deposit</h3>
+                <label for="depositType">Deposit Type</label>
+                <select id="depositType" onchange="toggleDepositOptions()">
+                    <option value="">Select Deposit Type</option>
+                    <option value="northSail">North Sail</option>
+                    <option value="otherHire">Other Hire</option>
+                </select>
+
+                <div id="northSailDepositOptions" style="display: none;">
+                    <label for="northSailDepositType">Deposit Type</label>
+                    <select id="northSailDepositType" onchange="toggleNorthSailDepositOptions()">
+                        <option value="">Select Deposit Type</option>
+                        <option value="monthly">Monthly Payment</option>
+                        <option value="advance">Advance Payment</option>
+                    </select>
+
+                    <div id="northSailDepositDetails" style="display: none;">
+                        <label for="northSailDepositAmount">Amount (LKR)</label>
+                        <input type="number" id="northSailDepositAmount" placeholder="Amount">
+
+                        <label for="northSailDepositDate">Deposit Date</label>
+                        <input type="date" id="northSailDepositDate">
+                    </div>
+                </div>
+
+                <div id="otherHireDepositOptions" style="display: none;">
+                    <label for="otherHireDepositAmount">Amount (LKR)</label>
+                    <input type="number" id="otherHireDepositAmount" placeholder="Amount">
+
+                    <label for="otherHireDepositDate">Deposit Date</label>
+                    <input type="date" id="otherHireDepositDate">
+                </div>
+
+                <button onclick="confirmDeposit()">Confirm Transaction</button>
+            </div>
+        </div>
+
+        <div class="payment-history" id="paymentHistory">
+            <h3>Payment History</h3>
+            <button onclick="togglePaymentHistory()">View Payment History</button>
+            <div id="paymentHistoryTable" style="display: none;">
+                <h4>North Sail Payments</h4>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Type</th>
+                            <th>Shift</th>
+                            <th>In/Out</th>
+                            <th>Route</th>
+                            <th>Amount (LKR)</th>
+                            <th>Payment Date</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="northSailHistoryBody"></tbody>
+                </table>
+                <h4>Other Hire Payments</h4>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Type</th>
+                            <th>Reason</th>
+                            <th>Amount (LKR)</th>
+                            <th>Payment Date</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="otherHireHistoryBody"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="monthly-totals" id="monthlyTotals">
+            <h3>Monthly Totals</h3>
+            <div id="northSailMonthlyTotal"></div>
+            <div id="otherHireMonthlyTotal"></div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+    <script>
+        function togglePaymentDepositOptions() {
+            const paymentOption = document.getElementById("paymentOption").value;
+            const paymentOptions = document.getElementById("paymentOptions");
+            const depositOptions = document.getElementById("depositOptions");
+
+            if (paymentOption === "payment") {
+                paymentOptions.style.display = "block";
+                depositOptions.style.display = "none";
+            } else if (paymentOption === "deposit") {
+                paymentOptions.style.display = "none";
+                depositOptions.style.display = "block";
+            } else {
+                paymentOptions.style.display = "none";
+                depositOptions.style.display = "none";
+            }
+        }
+
+        function togglePaymentHistory() {
+            const paymentHistoryTable = document.getElementById("paymentHistoryTable");
+            if (paymentHistoryTable.style.display === "none" || paymentHistoryTable.style.display === "") {
+                viewPaymentHistory();
+                paymentHistoryTable.style.display = "block";
+            } else {
+                paymentHistoryTable.style.display = "none";
+            }
+        }
+
+        function toggleDepositOptions() {
+            const depositType = document.getElementById("depositType").value;
+            const northSailDepositOptions = document.getElementById("northSailDepositOptions");
+            const otherHireDepositOptions = document.getElementById("otherHireDepositOptions");
+
+            if (depositType === "northSail") {
+                northSailDepositOptions.style.display = "block";
+                otherHireDepositOptions.style.display = "none";
+            } else if (depositType === "otherHire") {
+                northSailDepositOptions.style.display = "none";
+                otherHireDepositOptions.style.display = "block";
+            } else {
+                northSailDepositOptions.style.display = "none";
+                otherHireDepositOptions.style.display = "none";
+            }
+        }
+
+        function toggleNorthSailDepositOptions() {
+            const northSailDepositType = document.getElementById("northSailDepositType").value;
+            const northSailDepositDetails = document.getElementById("northSailDepositDetails");
+
+            if (northSailDepositType) {
+                northSailDepositDetails.style.display = "block";
+            } else {
+                northSailDepositDetails.style.display = "none";
+            }
+        }
+
+        function confirmDeposit() {
+            const depositType = document.getElementById("depositType").value;
+            let deposit = {};
+
+            if (depositType === "northSail") {
+                const northSailDepositType = document.getElementById("northSailDepositType").value;
+                const amount = document.getElementById("northSailDepositAmount").value;
+                const date = document.getElementById("northSailDepositDate").value;
+
+                deposit = {
+                    type: "North Sail",
+                    depositType: northSailDepositType,
+                    amount: -Math.abs(amount), // Negative amount for deposit
+                    paymentDate: date,
+                    transactionDate: new Date().toLocaleDateString(),
+                    vehicle: localStorage.getItem("selectedUser"),
+                    madeByAdmin: true
+                };
+            } else if (depositType === "otherHire") {
+                const amount = document.getElementById("otherHireDepositAmount").value;
+                const date = document.getElementById("otherHireDepositDate").value;
+
+                deposit = {
+                    type: "Other Hire",
+                    amount: -Math.abs(amount), // Negative amount for deposit
+                    paymentDate: date,
+                    transactionDate: new Date().toLocaleDateString(),
+                    vehicle: localStorage.getItem("selectedUser"),
+                    madeByAdmin: true
+                };
+            } else {
+                alert("Please select a deposit type.");
+                return;
+            }
+
+            const vehicle = localStorage.getItem("selectedUser");
+            let user = JSON.parse(localStorage.getItem(vehicle));
+            if (!user) {
+                alert("User details not found.");
+                return;
+            }
+            if (!user.payments) {
+                user.payments = [];
+            }
+            user.payments.push(deposit);
+            localStorage.setItem(vehicle, JSON.stringify(user));
+            alert("Deposit added successfully!");
+
+            // Reduce the deposit amount from the relevant monthly total
+            const paymentDate = new Date(deposit.paymentDate);
+            const monthStart = new Date(paymentDate.getFullYear(), paymentDate.getMonth(), 26);
+            const monthEnd = new Date(paymentDate.getFullYear(), paymentDate.getMonth() + 1, 25);
+            const monthlyTotals = JSON.parse(localStorage.getItem("monthlyTotals")) || {};
+            const monthKey = `${monthStart.getFullYear()}-${monthStart.getMonth() + 1}`;
+
+            if (!monthlyTotals[monthKey]) {
+                monthlyTotals[monthKey] = { northSail: 0, otherHire: 0 };
+            }
+
+            if (deposit.type === "North Sail") {
+                monthlyTotals[monthKey].northSail -= parseFloat(deposit.amount);
+            } else if (deposit.type === "Other Hire") {
+                monthlyTotals[monthKey].otherHire -= parseFloat(deposit.amount);
+            }
+
+            localStorage.setItem("monthlyTotals", JSON.stringify(monthlyTotals));
+
+            // Clear all selections
+            document.getElementById("depositType").value = "";
+            document.getElementById("northSailDepositType").value = "";
+            document.getElementById("northSailDepositAmount").value = "";
+            document.getElementById("northSailDepositDate").value = "";
+            document.getElementById("otherHireDepositAmount").value = "";
+            document.getElementById("otherHireDepositDate").value = "";
+            document.getElementById("northSailDepositOptions").style.display = "none";
+            document.getElementById("otherHireDepositOptions").style.display = "none";
+            document.getElementById("northSailDepositDetails").style.display = "none";
+
+            // Refresh the user details in the admin dashboard
+            loadRegisteredUsers();
+        }
+
+        function viewPaymentHistory() {
+            const selectedUserVehicle = localStorage.getItem("selectedUser");
+            const user = JSON.parse(localStorage.getItem(selectedUserVehicle));
+            const northSailHistoryBody = document.getElementById("northSailHistoryBody");
+            const otherHireHistoryBody = document.getElementById("otherHireHistoryBody");
+            northSailHistoryBody.innerHTML = "";
+            otherHireHistoryBody.innerHTML = "";
+
+            if (user && user.payments) {
+                user.payments.slice().reverse().forEach((payment, index) => {
+                    const rowClass = payment.madeByAdmin ? 'admin-deposit' : '';
+                    const amountClass = payment.amount < 0 ? 'red' : '';
+                    if (payment.type === "North Sail") {
+                        const row = `<tr class="${rowClass}">
+                            <td>${payment.type}</td>
+                            <td>${payment.date || ''}</td>
+                            <td>${payment.inOut || ''}</td>
+                            <td>${payment.route || ''}</td>
+                            <td class="amount ${amountClass}">${payment.amount}</td>
+                            <td>${payment.paymentDate || ''}</td>
+                            <td>${payment.madeByAdmin ? 'Admin' : ''}</td>
+                            <td><button onclick="removePayment(${index})" style="font-size: 12px;">X</button></td>
+                        </tr>`;
+                        northSailHistoryBody.innerHTML += row;
+                    } else if (payment.type === "Other Hire") {
+                        const row = `<tr class="${rowClass}">
+                            <td>${payment.type}</td>
+                            <td>${payment.reason || ''}</td>
+                            <td class="amount ${amountClass}">${payment.amount}</td>
+                            <td>${payment.paymentDate || ''}</td>
+                            <td>${payment.madeByAdmin ? 'Admin' : ''}</td>
+                            <td><button onclick="removePayment(${index})" style="font-size: 12px;">X</button></td>
+                        </tr>`;
+                        otherHireHistoryBody.innerHTML += row;
+                    }
+                });
+            }
+        }
+
+        function removePayment(index) {
+            const vehicle = localStorage.getItem("selectedUser");
+            let user = JSON.parse(localStorage.getItem(vehicle));
+            if (user && user.payments) {
+                user.payments.splice(index, 1);
+                localStorage.setItem(vehicle, JSON.stringify(user));
+                viewPaymentHistory();
+                alert("Payment removed successfully!");
+            }
+        }
+    </script>
+</body>
+</html>

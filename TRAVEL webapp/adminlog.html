@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login - Tasma Travel</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+
+
+    button {
+        padding: 10px;
+        margin: 10px 0;
+        background:  #005eff;
+        color: white;
+        border: none;
+        cursor: pointer;
+        border-radius: 5px;
+        font-size: 16px;
+        transition: background 0.5s ease;
+    }
+    button:hover {
+        background:  #003a9e;
+    }
+     </style>
+</head>
+<body>
+    <div class="container">
+        <h1><span class="blue">Tasma</span> <span class="orange">Travel</span></h1>
+        <h2>Admin Access</h2>
+        <form id="adminLoginForm">
+            <input type="password" id="adminCode" placeholder="Enter admin code" required>
+            <button type="submit">Login as Admin</button>
+        </form>
+        <p>Not an admin? <a href="index.html">User Login</a></p>
+    </div>
+
+    <script>
+        document.getElementById("adminLoginForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            const adminCode = document.getElementById("adminCode").value;
+            const correctAdminCode = "TASMA@2025"; // Correct admin code
+
+            if (adminCode === correctAdminCode) {
+                alert("Admin login successful!");
+                window.location.href = "adminview.html"; // Redirect to admin dashboard
+            } else {
+                alert("Invalid admin code. You are not authorized.");
+                window.location.href = "index.html"; // Redirect to index.html
+            }
+        });
+
+        function logout() {
+            localStorage.removeItem("adminSession");
+            window.location.href = "index.html";
+        }
+    </script>
+</body>
+</html>

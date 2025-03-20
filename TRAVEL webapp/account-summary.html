@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account Summary - Tasma Travel</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Add FontAwesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+          
+            height: 760px;
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            
+            padding: 20px;
+        }
+        header {
+            border-radius: 10px;
+            background: linear-gradient(to right, #ee8a2d, #ba36cbe2, #0f1ae9);
+            color: rgb(255, 255, 255);
+            padding: 10px 20px;
+            text-align: center;
+            position: relative;
+        }
+        .profile-photo {
+            position: absolute;
+            top: 90px;
+            right: 20px;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            border: 2px solid #fff;
+            object-fit: cover;
+        }
+   
+        .account-summary {
+            background-color: rgb(215, 220, 255);
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .account-summary h2 {
+            color: #f00a0a;
+            margin-bottom: 20px;
+        }
+        
+        .transaction-list {
+            list-style-type: none;
+            padding: 0;
+        }
+        .transaction-list li {
+            padding: 10px 0;
+            border-bottom: 1px solid #ffff;
+        }
+        .transaction-list li:last-child {
+            border-bottom: none;
+        }
+        .transaction-date {
+            color: #b5b5b5;
+            font-size: 10px;
+        }
+        .transaction-detail {
+            font-size: 16px;
+            color: #656565;
+            text-transform: uppercase;
+        }
+        .transaction-amount {
+            float: right;
+            font-weight: bold;
+            color: #646464;
+        }
+         .amount{
+            color: rgb(80, 197, 80);
+            font-weight: bold;
+            font-size: larger;
+           text-transform: lowercase;
+        }
+        .payment-history {
+            margin-top: 20px;
+        }
+        .year-month {
+            color: rgb(92, 141, 245);
+        }
+        .current-month {
+            color: rgb(119, 119, 165);
+        }
+        .north-sail {
+            color: rgb(3, 62, 81);
+        }
+       
+        .payment-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #ddd;
+        }
+        .in-out {
+            color: lightcoral;
+        }
+        .large-font {
+            font-size: 25px;
+        }
+
+        .amount.red {
+            color: rgb(247, 80, 80);
+        }
+        .amount.negative::before {
+            content: '⬅';
+            color: red;
+            margin-right: 5px;
+        }
+        .amount.positive::before {
+            content: '➡';
+            color: rgb(3, 170, 3);
+            margin-right: 5px;
+        }
+            
+    </style>
+</head>
+<body onload="loadAccountSummary()">
+    <!-- Sidebar -->
+    <div id="sidebar" class="sidebar">
+        <a href="javascript:void(0)" class="close-btn" onclick="closeSidebar()">×</a>
+        <div class="sidebar-header">
+            <h2>TASMA TRAVEL</h2>
+            <p><i class="fas fa-envelope"></i> Email: <span id="sidebarEmail"></span></p>
+            <p><i class="fas fa-phone"></i> Contact: <span id="sidebarPhone"></span></p>
+        </div>
+        <a href="profile.html"><i class="fas fa-user"></i> Profile</a>
+        <a href="account-summary.html"><i class="fas fa-chart-line"></i> Account Summary</a>
+        <a href="#" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</a>
+    </div>
+
+    <div class="container" id="summaryContainer">
+        <!-- Header -->
+        <header>
+            <div class="menu-icon" onclick="openSidebar()">☰</div>
+            <h1><span class="blue">TASMA</span> <span class="orange">TRAVEL</span></h1>
+            <img id="profilePhoto" class="profile-photo" src="user.jpg" alt="Profile Photo">
+            <div id="profileName" class="profile-name">User Name</div>
+        </header>
+
+        <!-- Account Summary Section -->
+        <div id="accountSummary" class="account-summary">
+            <h2>Account Summary</h2>
+
+            <!-- Monthly Income Summary -->
+            <div class="monthly-summary">
+                <h4>Monthly Income </h4>
+                <h5>(26th to 25th)</h5>
+                <div id="monthlyIncome">
+                </div>
+            </div>
+
+            <!-- Category Breakdown -->
+            <div class="category-summary" id="categorySummary" style="display: none;">
+                <div id="categoryTotal">
+                    <!-- Category totals will be displayed here -->
+                </div>
+            </div>
+
+            <div class="payment-history" id="paymentHistory">
+                <h3 id="currentMonthTotal" class="current-month"></h3>
+                <h3>Payment History</h3>
+                <button onclick="toggleNorthSailPaymentHistory()">View North Sail Payment History</button>
+                <button onclick="toggleOtherHirePaymentHistory()">View Other Hire Payment History</button>
+                <div id="northSailPaymentHistoryTable" style="display: none;">
+                    <h4>North Sail Payments</h4>
+                    <div class="container">
+                        <div class="payment-item"></div>
+                        <div class="diposit-form"></div>
+                        <div id="northSailHistoryBody"></div>
+
+                    </div>
+                </div>
+                <div id="otherHirePaymentHistoryTable" style="display: none;">
+                    <h4>Other Hire Payments</h4>
+                    <div class="container">
+                        <div class="payment-item">
+                            <div>Type</div>
+                            <div>Reason</div>
+                            <div class="amount">Amount (LKR)</div>
+                            
+                        </div>
+                        <div class="diposit-form"></div>
+                        <div id="otherHireHistoryBody"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+    <script>
+        function toggleNorthSailPaymentHistory() {
+            const northSailPaymentHistoryTable = document.getElementById("northSailPaymentHistoryTable");
+            const otherHirePaymentHistoryTable = document.getElementById("otherHirePaymentHistoryTable");
+            const categorySummary = document.getElementById("categorySummary");
+            if (northSailPaymentHistoryTable.style.display === "none" || northSailPaymentHistoryTable.style.display === "") {
+                viewPaymentHistory('North Sail');
+                northSailPaymentHistoryTable.style.display = "block";
+                otherHirePaymentHistoryTable.style.display = "none";
+                categorySummary.style.display = "none";
+            } else {
+                northSailPaymentHistoryTable.style.display = "none";
+            }
+        }
+
+        function toggleOtherHirePaymentHistory() {
+            const northSailPaymentHistoryTable = document.getElementById("northSailPaymentHistoryTable");
+            const otherHirePaymentHistoryTable = document.getElementById("otherHirePaymentHistoryTable");
+            const categorySummary = document.getElementById("categorySummary");
+            if (otherHirePaymentHistoryTable.style.display === "none" || otherHirePaymentHistoryTable.style.display === "") {
+                viewPaymentHistory('Other Hire');
+                otherHirePaymentHistoryTable.style.display = "block";
+                northSailPaymentHistoryTable.style.display = "none";
+                categorySummary.style.display = "none";
+            } else {
+                otherHirePaymentHistoryTable.style.display = "none";
+            }
+        }
+
+        function viewPaymentHistory(type) {
+            const currentUser = localStorage.getItem("currentUser");
+            const user = JSON.parse(localStorage.getItem(currentUser));
+            const northSailHistoryBody = document.getElementById("northSailHistoryBody");
+            const otherHireHistoryBody = document.getElementById("otherHireHistoryBody");
+            northSailHistoryBody.innerHTML = "";
+            otherHireHistoryBody.innerHTML = "";
+
+            if (user && user.payments) {
+                const paymentsByYearMonth = {};
+
+                user.payments.slice().reverse().forEach(payment => {
+                    if (payment.type === type) {
+                        const paymentDate = new Date(payment.paymentDate);
+                        const monthStart = new Date(paymentDate);
+                        monthStart.setDate(26);
+                        if (paymentDate.getDate() < 26) {
+                            monthStart.setMonth(paymentDate.getMonth() - 1);
+                        }
+                        const monthEnd = new Date(monthStart);
+                        monthEnd.setMonth(monthEnd.getMonth() + 1);
+                        monthEnd.setDate(26);
+                        const yearMonth = `${monthStart.getFullYear()} ${monthStart.toLocaleString('default', { month: 'long' })} - ${monthEnd.toLocaleString('default', { month: 'long' })}`;
+
+                        if (!paymentsByYearMonth[yearMonth]) {
+                            paymentsByYearMonth[yearMonth] = [];
+                        }
+                        paymentsByYearMonth[yearMonth].push(payment);
+                    }
+                });
+
+                const sortedYearMonths = Object.keys(paymentsByYearMonth).sort((a, b) => new Date(a.split(' ')[0], a.split(' ')[1]) - new Date(b.split(' ')[0], b.split(' ')[1]));
+
+                sortedYearMonths.forEach(yearMonth => {
+                    const yearMonthDiv = document.createElement("div");
+                    yearMonthDiv.classList.add("year-month");
+                    yearMonthDiv.innerHTML = `<h4>${yearMonth}</h4><div style="height: 20px;"></div>`;
+
+                    paymentsByYearMonth[yearMonth].forEach(payment => {
+                        const amountClass = payment.amount < 0 ? 'red negative' : (payment.madeByAdmin ? 'positive' : '');
+                        const row = `<div class="payment-item ${payment.madeByAdmin ? 'admin-deposit' : ''}">
+                            <div class="${payment.type === 'North Sail' || payment.type === 'Other Hire' ? 'negative' : ''}">${payment.type}</div>
+                            <div class="payment-date small-font">${payment.paymentDate || ''}</div>
+                            ${payment.type === 'North Sail' ? `<div>${payment.date || ''} <span class="in-out">${payment.inOut || ''}</span> ${payment.route || (payment.madeByAdmin ? `Deposit ${payment.depositType}` : '')}</div>` : ''}
+                            <div>${payment.type === 'Other Hire' ? payment.reason || '' : ''}</div>
+                            <div class="amount ${amountClass}">${payment.amount}</div>
+                        </div>`;
+                        yearMonthDiv.innerHTML += row;
+                    });
+
+                    if (type === "North Sail") {
+                        northSailHistoryBody.appendChild(yearMonthDiv);
+                    } else if (type === "Other Hire") {
+                        otherHireHistoryBody.appendChild(yearMonthDiv);
+                    }
+                });
+            }
+        }
+
+        function displayCategoryButtons() {
+            const currentUser = localStorage.getItem("currentUser");
+            const user = JSON.parse(localStorage.getItem(currentUser));
+            const categoryTotalDiv = document.getElementById("categoryTotal");
+            categoryTotalDiv.innerHTML = "";
+
+            if (user && user.payments) {
+                const paymentsByMonth = {};
+
+                user.payments.forEach(payment => {
+                    if (payment.type === "North Sail") {
+                        const paymentDate = new Date(payment.paymentDate);
+                        const monthStart = new Date(paymentDate);
+                        monthStart.setDate(26);
+                        if (paymentDate.getDate() < 26) {
+                            monthStart.setMonth(paymentDate.getMonth() - 1);
+                        }
+                        const monthEnd = new Date(monthStart);
+                        monthEnd.setMonth(monthEnd.getMonth() + 1);
+                        monthEnd.setDate(26);
+                        const monthKey = `${monthStart.toLocaleString('default', { month: 'long' })} 26 - ${monthEnd.toLocaleString('default', { month: 'long' })} 26`;
+
+                        if (!paymentsByMonth[monthKey]) {
+                            paymentsByMonth[monthKey] = [];
+                        }
+                        paymentsByMonth[monthKey].push(payment);
+                    }
+                });
+
+                const sortedMonthKeys = Object.keys(paymentsByMonth).sort((a, b) => new Date(a.split(' ')[2]) - new Date(b.split(' ')[2]));
+
+                sortedMonthKeys.forEach(monthKey => {
+                    const button = document.createElement("button");
+                    button.textContent = monthKey;
+                    button.onclick = () => {
+                        viewMonthPayments(paymentsByMonth[monthKey]);
+                        setActiveButton(button);
+                    };
+                    categoryTotalDiv.appendChild(button);
+                });
+            }
+        }
+
+        function viewMonthPayments(payments) {
+            const northSailHistoryBody = document.getElementById("northSailHistoryBody");
+            northSailHistoryBody.innerHTML = "";
+
+            payments.forEach(payment => {
+                const amountClass = payment.amount < 0 ? 'red negative' : (payment.madeByAdmin ? 'positive' : '');
+                const row = `<div class="payment-item ${payment.madeByAdmin ? 'admin-deposit' : ''}">
+                    <div class="${payment.type === 'North Sail' || payment.type === 'Other Hire' ? 'negative' : ''}">${payment.type}</div>
+                    <div class="payment-date small-font">${payment.paymentDate || ''}</div>
+                    ${payment.type === 'North Sail' ? `<div>${payment.date || ''} <span class="in-out">${payment.inOut || ''}</span> ${payment.route || (payment.madeByAdmin ? `Deposit ${payment.depositType}` : '')}</div>` : ''}
+                    <div>${payment.type === 'Other Hire' ? payment.reason || '' : ''}</div>
+                    <div class="amount ${amountClass}">${payment.amount}</div>
+                </div>`;
+                northSailHistoryBody.innerHTML += row;
+            });
+
+            document.getElementById("northSailPaymentHistoryTable").style.display = "block";
+        }
+
+        function setActiveButton(button) {
+            const buttons = document.querySelectorAll('.monthly-summary button');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            button.classList.add('active');
+        }
+
+        function loadAccountSummary() {
+            document.getElementById("categorySummary").style.display = "block";
+            displayCurrentMonthTotal();
+            loadProfilePhoto();
+            loadProfileName();
+        }
+
+        function displayCurrentMonthTotal() {
+            const currentUser = localStorage.getItem("currentUser");
+            const user = JSON.parse(localStorage.getItem(currentUser));
+            const currentMonthTotal = document.getElementById("currentMonthTotal");
+            let northSailTotal = 0;
+            let otherHireTotal = 0;
+
+            if (user && user.payments) {
+                const today = new Date();
+                const currentMonth = today.getMonth();
+                const currentYear = today.getFullYear();
+                const lastMonth = currentMonth === 0 ? 11 : currentMonth - 1;
+                const lastMonthYear = currentMonth === 0 ? currentYear - 1 : currentYear;
+                const startDate = new Date(lastMonthYear, lastMonth, 26);
+                const endDate = new Date(currentYear, currentMonth, 26);
+
+                user.payments.forEach(payment => {
+                    const paymentDate = new Date(payment.paymentDate);
+                    if (paymentDate >= startDate && paymentDate <= endDate) {
+                        if (payment.type === "North Sail") {
+                            northSailTotal += parseFloat(payment.amount);
+                        } else if (payment.type === "Other Hire") {
+                            otherHireTotal += parseFloat(payment.amount);
+                        }
+                    }
+                });
+            }
+
+            const currentMonthName = new Date().toLocaleString('default', { month: 'long' });
+            const lastMonthName = new Date(new Date().setMonth(new Date().getMonth() - 1)).toLocaleString('default', { month: 'long' });
+
+            currentMonthTotal.innerHTML = `
+                <div>Current Month (${lastMonthName} 26 - ${currentMonthName} 26) Total:</div>
+                <div class="north-sail large-font">North Sail: LKR ${northSailTotal.toFixed(2)}</div>
+                <div class="total-amount large-font">Other Hire: LKR ${otherHireTotal.toFixed(2)}</div>
+            `;
+        }
+
+        function loadProfilePhoto() {
+            const currentUser = localStorage.getItem("currentUser");
+            const user = JSON.parse(localStorage.getItem(currentUser));
+            if (user && user.profilePic) {
+                document.getElementById("profilePhoto").src = user.profilePic;
+            }
+        }
+
+        function loadProfileName() {
+            const currentUser = localStorage.getItem("currentUser");
+            const user = JSON.parse(localStorage.getItem(currentUser));
+            if (user && user.name) {
+                document.getElementById("profileName").textContent = user.name;
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Route Management</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            padding: 20px;
+        }
+        header {
+            border-radius: 10px;
+            background: linear-gradient(to right, #ee8a2d, #ba36cbe2, #0f1ae9);
+            color: rgb(255, 255, 255);
+            padding: 10px 20px;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .menu-icon {
+            font-size: 23px;
+            cursor: pointer;
+            color: #ffffff;
+            border-radius: 7px;
+        }
+        .menu-icon:hover {
+            border: 2px solid #c7ced4;
+            font-size: 27px;
+            color: #fff;
+            transition: .1s;
+        }
+        .route-form {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+        }
+        .route-form h2 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .route-form label {
+            display: block;
+            margin-bottom: 5px;
+            color: #333;
+        }
+        .route-form input, .route-form select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .route-form button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .route-form button:hover {
+            background-color: #0056b3;
+        }
+        .route-list {
+            margin-top: 20px;
+        }
+        .route-list table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .route-list th, .route-list td {
+            padding: 10px;
+            border: 1px solid #ccc;
+            text-align: left;
+        }
+        .route-list th {
+            background-color: #f4f4f4;
+        }
+        .edit-btn {
+            background-color: #ffc107;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .edit-btn:hover {
+            background-color: #e0a800;
+        }
+        .save-btn {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .save-btn:hover {
+            background-color: #218838;
+        }
+        .sidebar {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background-color: #2c3e50b8;
+            overflow-x: hidden;
+            transition: 0.5s;
+            padding-top: 60px;
+            z-index: 1000;
+        }
+        .sidebar.active {
+            left: 0;
+        }
+        .sidebar a {
+            padding: 15px 25px;
+            text-decoration: none;
+            font-size: 18px;
+            color: #ecf0f1;
+            display: block;
+            transition: 0.3s;
+        }
+        .sidebar a:hover {
+            font-size: 21px;
+            color: #cee9ad;
+        }
+        .sidebar .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 25px;
+            font-size: 30px;
+            color: #ecf0f1;
+            cursor: pointer;
+        }
+        .sidebar .close-btn:hover {
+            color: #e74c3c;
+        }
+        .sidebar-header {
+            padding: 20px;
+            text-align: center;
+            color: #ecf0f1;
+            border-bottom: 1px solid #2c3e50b8;
+        }
+        .sidebar-header h2 {
+            margin: 0;
+            font-size: 22px;
+        }
+        .sidebar-header p {
+            margin: 10px 0;
+            font-size: 16px;
+        }
+        .sidebar-header a {
+            color: #1abc9c;
+            text-decoration: underline;
+        }
+        .container {
+            margin-left: 250px;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div id="sidebar" class="sidebar">
+        <a href="javascript:void(0)" class="close-btn" onclick="closeSidebar()">×</a>
+        <div class="sidebar-header">
+            <h2>TASMA TRAVEL</h2>
+            <p><i class="fas fa-envelope"></i> Email: Himaljanaka@gmail.com</p>
+            <p><i class="fas fa-phone"></i> Contact: +94 712213722</p>
+        </div>
+        <a href="adminview.html"><i class="fas fa-users"></i> Dashboard</a>
+        <a href="route.html"><i class="fas fa-road"></i> Manage Routes</a>
+        <a href="#" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</a>
+    </div>
+    <div class="container">
+        <header>
+            <div class="menu-icon" onclick="openSidebar()">☰</div>
+            <h1>Route Management</h1>
+        </header>
+
+        <div class="route-form">
+            <h2>Add New Route</h2>
+            <label for="vehicleType">Vehicle Type</label>
+            <select id="vehicleType">
+                <option value="">Select Vehicle Type</option>
+                <option value="Dolphin">Dolphin Hiroof</option>
+                <option value="Hiace">Hiace KDH</option>
+                <option value="Bus">Bus</option>
+                <option value="Mini Bus">Mini Bus</option>
+            </select>
+
+            <label for="routeNumber">Route Number</label>
+            <input type="text" id="routeNumber" placeholder="Enter route number">
+
+            <label for="routeName">Route Name</label>
+            <input type="text" id="routeName" placeholder="Enter route name">
+
+            <label for="routeAmount">Route Amount (LKR)</label>
+            <input type="number" id="routeAmount" placeholder="Enter route amount">
+
+            <button onclick="addRoute()">Add Route</button>
+        </div>
+
+        <div class="route-list">
+            <h2>Route List</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Vehicle Type</th>
+                        <th>Route Number</th>
+                        <th>Route Name</th>
+                        <th>Route Amount (LKR)</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="routeTableBody">
+                    <!-- Route list will be displayed here -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        function openSidebar() {
+            document.getElementById("sidebar").style.width = "250px";
+        }
+
+        function closeSidebar() {
+            document.getElementById("sidebar").style.width = "0";
+        }
+
+        function addRoute() {
+            const vehicleType = document.getElementById("vehicleType").value;
+            const routeNumber = document.getElementById("routeNumber").value;
+            const routeName = document.getElementById("routeName").value;
+            const routeAmount = document.getElementById("routeAmount").value;
+
+            if (!vehicleType || !routeNumber || !routeName || !routeAmount) {
+                alert("Please fill in all fields.");
+                return;
+            }
+
+            const route = {
+                vehicleType,
+                routeNumber,
+                routeName,
+                routeAmount
+            };
+
+            let routes = JSON.parse(localStorage.getItem("routes")) || [];
+            routes.push(route);
+            localStorage.setItem("routes", JSON.stringify(routes));
+
+            displayRoutes();
+            clearForm();
+        }
+
+        function displayRoutes() {
+            const routes = JSON.parse(localStorage.getItem("routes")) || [];
+            const routeTableBody = document.getElementById("routeTableBody");
+            routeTableBody.innerHTML = "";
+
+            routes.forEach((route, index) => {
+                const row = `
+                    <tr>
+                        <td>${route.vehicleType}</td>
+                        <td>${route.routeNumber}</td>
+                        <td>${route.routeName}</td>
+                        <td><input type="number" value="${route.routeAmount}" id="routeAmount-${index}" disabled></td>
+                        <td>
+                            <button class="edit-btn" onclick="editRoute(${index})">Edit</button>
+                            <button class="save-btn" onclick="saveRoute(${index})" style="display: none;">Save</button>
+                        </td>
+                    </tr>
+                `;
+                routeTableBody.innerHTML += row;
+            });
+        }
+
+        function editRoute(index) {
+            document.getElementById(`routeAmount-${index}`).disabled = false;
+            document.querySelectorAll('.edit-btn')[index].style.display = 'none';
+            document.querySelectorAll('.save-btn')[index].style.display = 'inline-block';
+        }
+
+        function saveRoute(index) {
+            const routes = JSON.parse(localStorage.getItem("routes")) || [];
+            const newAmount = document.getElementById(`routeAmount-${index}`).value;
+            routes[index].routeAmount = newAmount;
+            localStorage.setItem("routes", JSON.stringify(routes));
+            displayRoutes();
+        }
+
+        function clearForm() {
+            document.getElementById("vehicleType").value = "";
+            document.getElementById("routeNumber").value = "";
+            document.getElementById("routeName").value = "";
+            document.getElementById("routeAmount").value = "";
+        }
+
+        function logout() {
+            localStorage.removeItem("currentUser");
+            window.location.href = "index.html";
+        }
+
+        // Display routes on page load
+        window.onload = displayRoutes;
+    </script>
+</body>
+</html>
